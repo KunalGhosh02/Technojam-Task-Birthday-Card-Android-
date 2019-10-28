@@ -102,29 +102,29 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/submitbtn"
-            style="@style/Widget.MaterialComponents.Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.193"
+            app:layout_constraintHorizontal_bias="0.213"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-            app:layout_constraintVertical_bias="0.074" />
+            app:layout_constraintVertical_bias="0.075" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/gallery"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pick Image"
-            style="@style/Widget.MaterialComponents.Button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.482"
+            app:layout_constraintHorizontal_bias="0.591"
             app:layout_constraintStart_toEndOf="@+id/button"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-            app:layout_constraintVertical_bias="0.074">
+            app:layout_constraintVertical_bias="0.075">
 
         </com.google.android.material.button.MaterialButton>
 
@@ -141,8 +141,22 @@
             app:layout_constraintVertical_bias="0.656"
             app:srcCompat="@drawable/logo" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#EB3232"
+            android:text="Please always select a photo a photo before generating."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
