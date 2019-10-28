@@ -1,4 +1,6 @@
-# TechnojamAndroid
+# TechnojamAndroid - MATERIAL 
+
+
  Proof of concept Android app for Technojam pre membership task.
  
 # Download & Build
