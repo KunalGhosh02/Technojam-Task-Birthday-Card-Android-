@@ -5,8 +5,11 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.TestLooperManager;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.InputStream;
 
@@ -25,17 +29,18 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_URI = "com.technojamtask.URI";
     public static final int PICK_IMAGE = 100;
 
+
     Uri imageUri = Uri.EMPTY;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final CoordinatorLayout coordinatorLayout = findViewById(R.id.mainactivity);
-
         Button submit = findViewById(R.id.button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeKeyboard();
                 if(!Uri.EMPTY.equals(imageUri))
                 openCard();
                 else
@@ -45,7 +50,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             private void showSnackBar(){
-                Snackbar snackbar = Snackbar.make(coordinatorLayout, "Please select an image first!", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(coordinatorLayout, "No image selected, use default?", Snackbar.LENGTH_LONG);
+                snackbar.setAction("YES", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        openCard();
+                    }
+                });
                 snackbar.show();
             }
         });
@@ -67,7 +78,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
 
+    public void closeKeyboard(){
+        View v = this.getCurrentFocus();
+        if(v != null){
+            InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
     }
 
     public void openGallery(){
@@ -89,21 +107,33 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void openCard() {
-        EditText from = findViewById(R.id.fromName);
+
+        TextInputEditText from = findViewById(R.id.fromName);
         String fromVal = from.getText().toString();
-        EditText to = findViewById(R.id.toName);
+        TextInputEditText to = findViewById(R.id.toName);
         String toVal = to.getText().toString();
-        EditText wish = findViewById(R.id.getWish);
+        TextInputEditText wish = findViewById(R.id.getWish);
         String wishVal = wish.getText().toString();
 
-        Intent intent = new Intent(this, CardActivity.class);
+        if (TextUtils.isEmpty(fromVal) || TextUtils.isEmpty(toVal)){
+            if (TextUtils.isEmpty(fromVal) && TextUtils.isEmpty(toVal)){
+                from.setError("This field is required");
+                to.setError("This field is required");
+            }
+            else if(TextUtils.isEmpty(fromVal))
+            from.setError("This field is required");
+            else if(TextUtils.isEmpty(toVal))
+                to.setError("This field is required");
 
-        intent.putExtra(EXTRA_WISHNAME1, toVal);
-        intent.putExtra(EXTRA_WISHNAME2, fromVal);
-        intent.putExtra(EXTRA_WISH, wishVal);
-        intent.putExtra(EXTRA_URI, imageUri.toString());
-        startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, CardActivity.class);
 
+            intent.putExtra(EXTRA_WISHNAME1, toVal);
+            intent.putExtra(EXTRA_WISHNAME2, fromVal);
+            intent.putExtra(EXTRA_WISH, wishVal);
+            intent.putExtra(EXTRA_URI, imageUri.toString());
+            startActivity(intent);
+        }
     }
 
     public void openAbout(){

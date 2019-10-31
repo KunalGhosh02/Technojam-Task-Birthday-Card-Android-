@@ -44,20 +44,24 @@ public class CardActivity extends AppCompatActivity{
             wi.setText(wish);
         }
 
-            Bitmap bitmap;
+            if(Uri.EMPTY.equals(myUri)) {
 
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), myUri);
-            } catch (Exception e) {
-                return;
+                Bitmap bitmap;
+
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), myUri);
+                } catch (Exception e) {
+                    return;
+                }
+
+                DisplayMetrics display = this.getResources().getDisplayMetrics();
+
+                Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, display.widthPixels, display.heightPixels, true);
+
+                Drawable d = new BitmapDrawable(getResources(), bitmap2);
+                cs.setBackground(d);
+
             }
-
-        DisplayMetrics display=this.getResources().getDisplayMetrics();
-
-        Bitmap bitmap2 =Bitmap.createScaledBitmap(bitmap, display.widthPixels,display.heightPixels, true);
-
-        Drawable d = new BitmapDrawable(getResources(), bitmap2);
-        cs.setBackground(d);
 
     }
     public static boolean isNullOrEmpty(String str) {
