@@ -44,7 +44,8 @@ public class CardActivity extends AppCompatActivity{
             wi.setText(wish);
         }
 
-            if(Uri.EMPTY.equals(myUri)) {
+            if(!Uri.EMPTY.equals(myUri)) {
+
 
                 Bitmap bitmap;
 
